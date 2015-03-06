@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.dai.demo.entity.Customer;
-import com.dai.demo.repository.CustomerRepository;
+import com.dai.demo.foo.foo.repository.CustomerRepository;
 import com.dai.demo.service.FooService;
 
 /**
@@ -45,27 +45,27 @@ public class MyResource {
 		// repository.save(new Customer("Michelle", "Dessler"));
 
 		// fetch all customers
-		System.out.println("Customers found with findAll():");
-		System.out.println("-------------------------------");
-		for (Customer customer : repository.findAll()) {
-			System.out.println(customer);
-		}
-		System.out.println();
-
-		// fetch an individual customer by ID
-		Customer customer = repository.findOne(1L);
-		System.out.println("Customer found with findOne(1L):");
-		System.out.println("--------------------------------");
-		System.out.println(customer);
-		System.out.println();
-
-		// fetch customers by last name
-		System.out.println("Customer found with findByLastName('Bauer'):");
-		System.out.println("--------------------------------------------");
-		for (Customer bauer : repository.findByLastName("Bauer")) {
-			System.out.println(bauer);
-		}
-		System.out.println();
+//		System.out.println("Customers found with findAll():");
+//		System.out.println("-------------------------------");
+//		for (Customer customer : repository.findAll()) {
+//			System.out.println(customer);
+//		}
+//		System.out.println();
+//
+//		// fetch an individual customer by ID
+//		Customer customer = repository.findOne(1L);
+//		System.out.println("Customer found with findOne(1L):");
+//		System.out.println("--------------------------------");
+//		System.out.println(customer);
+//		System.out.println();
+//
+//		// fetch customers by last name
+//		System.out.println("Customer found with findByLastName('Bauer'):");
+//		System.out.println("--------------------------------------------");
+//		for (Customer bauer : repository.findByLastName("Bauer")) {
+//			System.out.println(bauer);
+//		}
+//		System.out.println();
 
 		// my test
 		System.out.println("my test");

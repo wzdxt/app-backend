@@ -48,6 +48,9 @@
   http://www.springframework.org/schema/context
   http://www.springframework.org/schema/context/spring-context.xsd"
         >
-	<context:component-scan base-package="com.dai.demo"></context:component-scan>
+	<context:component-scan base-package="com.dai.demo.spring"></context:component-scan>
+	<!-- 
+	<context:component-scan base-package-classes="com.dai.demo.spring.ApplicationContext"></context:component-scan>
+	 -->
 
 </beans>

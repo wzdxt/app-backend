@@ -1,4 +1,4 @@
-package com.dai.demo.repository;
+package com.dai.demo.foo.foo.repository;
 
 import java.util.List;
 
