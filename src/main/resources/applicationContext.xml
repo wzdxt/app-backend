@@ -50,8 +50,7 @@
   http://www.springframework.org/schema/context/spring-context.xsd
   http://www.springframework.org/schema/util
   http://www.springframework.org/schema/util/spring-util.xsd">
-	<context:component-scan base-package="com.dai.demo.spring"></context:component-scan>
-
+    <context:component-scan base-package="com.dai.demo.spring"></context:component-scan>
 
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -62,15 +61,16 @@
         <property name="filters">
             <util:map>
                 <entry key="nativeAuthc" value-ref="nativeAuthenticationFilter"/>
-                <!--<entry key="authc" value-ref="appAuthenticationFilter"/>-->
+                <entry key="authc" value-ref="appAuthenticationFilter"/>
             </util:map>
         </property>
         <property name="filterChainDefinitions">
             <value>
                 /webapi/*=anon
                 /webapi/auth/logout=anon
+                /webapi/auth/signup=anon
                 /webapi/auth/login=nativeAuthc
-                <!--/webapi/auth/*=authc-->
+                /webapi/auth/**=authc
                 <!--/login.do*=authc-->
 
                 <!--# 权限配置示例-->
@@ -86,30 +86,37 @@
         <!--<property name="realm" ref="jdbcShiroRealm"/>-->
         <property name="realms">
             <list>
-                <ref bean="jdbcShiroRealm" />
-                <ref bean="weiboShiroRealm" />
+                <ref bean="jdbcShiroRealm"/>
+                <ref bean="nativeShiroRealm"/>
+                <ref bean="weiboShiroRealm"/>
             </list>
         </property>
     </bean>
 
-    <bean id="jdbcShiroRealm" class="com.dai.demo.auth.JdbcShiroRealm">
-        <!-- businessManager 用来实现用户名密码的查询 -->
+    <bean id="jdbcShiroRealm" class="com.dai.demo.auth.realm.JdbcShiroRealm">
         <property name="cacheManager" ref="shiroCacheManager"/>
     </bean>
-    <bean id="weiboShiroRealm" class="com.dai.demo.auth.weiboShiroRealm">
-        <!-- businessManager 用来实现用户名密码的查询 -->
+    <bean id="weiboShiroRealm" class="com.dai.demo.auth.realm.WeiboShiroRealm">
+        <property name="cacheManager" ref="shiroCacheManager"/>
+    </bean>
+    <bean id="nativeShiroRealm" class="com.dai.demo.auth.realm.NativeShiroRealm">
         <property name="cacheManager" ref="shiroCacheManager"/>
     </bean>
 
-    <bean id="lifecycleBeanPostProcessor"
-          class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 
-    <bean id="shiroCacheManager"
-          class="org.apache.shiro.cache.ehcache.EhCacheManager">
+    <bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
         <!--<property name="cacheManager" ref="cacheManager"/>-->
     </bean>
 
-    <bean id="nativeAuthenticationFilter"
-          class="com.dai.demo.filter.auth.JdbcAuthorizationFilter"/>
+    <bean id="nativeAuthenticationFilter" class="com.dai.demo.auth.filter.NativeLoginAuthorizationFilter"/>
+    <bean id="appAuthenticationFilter" class="com.dai.demo.auth.filter.AppAuthorizationFilter"/>
 
+    <bean id="allowAllCredentialsMatcher" class="org.apache.shiro.authc.credential.AllowAllCredentialsMatcher"/>
+    <bean id="passwordMatcher" class="org.apache.shiro.authc.credential.PasswordMatcher">
+        <property name="passwordService" ref="passwordService"/>
+    </bean>
+    <bean id="passwordService" class="org.apache.shiro.authc.credential.DefaultPasswordService">
+        <property name="hashService" ref="hashService"/>
+    </bean>
 </beans>

@@ -12,5 +12,15 @@ import org.springframework.stereotype.Component;
 @Scope("session")
 public class User {
     private long id;
-    private String name;
+    private String username;
+    private String password;
+    private int hashIterations;
+    private String hashAlgorithmName;
+
+    public User(String username, String password, int hashIterations, String hashAlgorithmName) {
+        this.username = username;
+        this.password = password;
+        this.hashIterations = hashIterations;
+        this.hashAlgorithmName = hashAlgorithmName;
+    }
 }
