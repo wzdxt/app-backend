@@ -11,8 +11,8 @@ import java.util.Date;
 /**
  * Created by wzdxt on 15/3/22.
  */
-public class LogFilter implements Filter {
-    private static Logger log = LoggerFactory.getLogger(LogFilter.class);
+public class RequestLogFilter implements Filter {
+    private static Logger log = LoggerFactory.getLogger(RequestLogFilter.class);
 
     public void doFilter(ServletRequest req, ServletResponse res,
                          FilterChain chain) throws IOException, ServletException {
@@ -23,22 +23,14 @@ public class LogFilter implements Filter {
         String ipAddress = request.getRemoteAddr();
 
         //Log the IP address and current timestamp.
-        log.info("IP {}, Time {}", ipAddress, new Date().toString());
+        log.info("[Access] {}", ipAddress);
 
         chain.doFilter(req, res);
     }
 
     public void init(FilterConfig config) throws ServletException {
-
-        //Get init parameter
-        String testParam = config.getInitParameter("test-param");
-
-        //Print the init parameter
-        log.info("Test Param: {}", testParam);
     }
 
     public void destroy() {
-        //add code to release any resource
-        System.out.println("Filter destroyed. ");
     }
 }
