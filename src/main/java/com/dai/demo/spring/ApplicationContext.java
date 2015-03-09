@@ -3,6 +3,7 @@ package com.dai.demo.spring;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.dai.demo.service.FooService;
@@ -14,6 +15,7 @@ import com.dai.demo.spring.hibernate.HibernateConfiguration;
 public class ApplicationContext {
 
 	@Bean(name = "fooServiceImpl2")
+    @Scope("session")
 	public FooService getFooService() {
 		return new A();
 	}
@@ -21,9 +23,11 @@ public class ApplicationContext {
 }
 
 class A implements FooService {
+    private int count = 0;
 	@Override
 	public String get() {
-		return "bbbbbbbbbbbbbbbbbb";
+        count++;
+		return "bbbbbbbbbbbbbbbbbb " + count ;
 	}
 
 }
