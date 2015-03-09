@@ -43,14 +43,73 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
   http://www.springframework.org/schema/beans/spring-beans.xsd
   http://www.springframework.org/schema/context
-  http://www.springframework.org/schema/context/spring-context.xsd"
-        >
+  http://www.springframework.org/schema/context/spring-context.xsd
+  http://www.springframework.org/schema/util
+  http://www.springframework.org/schema/util/spring-util.xsd">
 	<context:component-scan base-package="com.dai.demo.spring"></context:component-scan>
-	<!-- 
-	<context:component-scan base-package-classes="com.dai.demo.spring.ApplicationContext"></context:component-scan>
-	 -->
+
+
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/webapi/auth/login"/>
+        <!--<property name="successUrl" value="/welcome.do"/>-->
+        <!--<property name="unauthorizedUrl" value="/403.do"/>-->
+        <property name="filters">
+            <util:map>
+                <entry key="nativeAuthc" value-ref="nativeAuthenticationFilter"/>
+                <!--<entry key="authc" value-ref="appAuthenticationFilter"/>-->
+            </util:map>
+        </property>
+        <property name="filterChainDefinitions">
+            <value>
+                /webapi/*=anon
+                /webapi/auth/logout=anon
+                /webapi/auth/login=nativeAuthc
+                <!--/webapi/auth/*=authc-->
+                <!--/login.do*=authc-->
+
+                <!--# 权限配置示例-->
+                <!--/security/account/view.do=authc,perms[SECURITY_ACCOUNT_VIEW]-->
+
+                <!--/** = authc-->
+            </value>
+        </property>
+    </bean>
+
+    <bean id="securityManager"
+          class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!--<property name="realm" ref="jdbcShiroRealm"/>-->
+        <property name="realms">
+            <list>
+                <ref bean="jdbcShiroRealm" />
+                <ref bean="weiboShiroRealm" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="jdbcShiroRealm" class="com.dai.demo.auth.JdbcShiroRealm">
+        <!-- businessManager 用来实现用户名密码的查询 -->
+        <property name="cacheManager" ref="shiroCacheManager"/>
+    </bean>
+    <bean id="weiboShiroRealm" class="com.dai.demo.auth.weiboShiroRealm">
+        <!-- businessManager 用来实现用户名密码的查询 -->
+        <property name="cacheManager" ref="shiroCacheManager"/>
+    </bean>
+
+    <bean id="lifecycleBeanPostProcessor"
+          class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <bean id="shiroCacheManager"
+          class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <!--<property name="cacheManager" ref="cacheManager"/>-->
+    </bean>
+
+    <bean id="nativeAuthenticationFilter"
+          class="com.dai.demo.filter.auth.JdbcAuthorizationFilter"/>
 
 </beans>

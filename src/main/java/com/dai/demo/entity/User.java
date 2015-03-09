@@ -1,6 +1,7 @@
 package com.dai.demo.entity;
 
 import lombok.Data;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
+@Scope("session")
 public class User {
     private long id;
     private String name;

@@ -1,17 +1,16 @@
-package com.dai.demo.foo;
+package com.dai.demo.webapi;
+
+import com.dai.demo.webapi.foo.repository.CustomerRepository;
+import com.dai.demo.service.FooService;
+import org.apache.shiro.SecurityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
-
-import com.dai.demo.entity.Customer;
-import com.dai.demo.foo.foo.repository.CustomerRepository;
-import com.dai.demo.service.FooService;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -37,7 +36,20 @@ public class MyResource {
 		System.out.println(s.get());
 		sb.append(s.get()).append("\n");
 
-		// save a couple of customers
+        //shiro test
+		System.out.println("shiro test");
+		System.out.println("-------------------------------");
+        org.apache.shiro.subject.Subject currentUser = SecurityUtils.getSubject();
+        if (!currentUser.isAuthenticated()) {
+            System.out.println("not logged in.");
+            sb.append("not logged in.\n");
+        } else {
+            System.out.println((currentUser.getPrincipal()).toString() + " logged in.");
+            sb.append("Hi, ").append("\n");
+        }
+
+
+        // save a couple of customers
 		// repository.save(new Customer("Jack", "Bauer"));
 		// repository.save(new Customer("Chloe", "O'Brian"));
 		// repository.save(new Customer("Kim", "Bauer"));
@@ -68,14 +80,14 @@ public class MyResource {
 //		System.out.println();
 
 		// my test
-		System.out.println("my test");
-		System.out.println("--------------------------------------------");
-		for (Customer m : repository.findByMy("Jack")) {
-			System.out.println(m);
-			sb.append(m).append("\n");
-		}
-		System.out.println(repository.findOneByMy("Kimm"));
-		System.out.println();
+//		System.out.println("my test");
+//		System.out.println("--------------------------------------------");
+//		for (Customer m : repository.findByMy("Jack")) {
+//			System.out.println(m);
+//			sb.append(m).append("\n");
+//		}
+//		System.out.println(repository.findOneByMy("Kimm"));
+//		System.out.println();
 
 		return sb.toString() + "succeed";
 	}

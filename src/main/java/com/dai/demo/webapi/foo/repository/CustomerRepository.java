@@ -1,4 +1,4 @@
-package com.dai.demo.foo.foo.repository;
+package com.dai.demo.webapi.foo.repository;
 
 import java.util.List;
 

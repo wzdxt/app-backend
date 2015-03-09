@@ -53,7 +53,7 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+            <version>${servlet-api.version}</version>
         </dependency>
 
         <dependency>
@@ -131,26 +131,61 @@
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>persistence-api</artifactId>
-            <version>1.0.2</version>
+            <version>${javax.persistence.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.2</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- shiro support -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+
+        <!-- JSON -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
+        </dependency>
+
     </dependencies>
 
     <properties>
         <jersey.version>2.16</jersey.version>
         <spring.version>4.1.5.RELEASE</spring.version>
+        <servlet-api.version>2.5</servlet-api.version>
         <junit.version>4.12</junit.version>
         <jersey-spring3.version>2.16</jersey-spring3.version>
         <hibernate-core.version>4.3.8.Final</hibernate-core.version>
         <hibernate-entitymanager.version>4.3.8.Final</hibernate-entitymanager.version>
         <spring-data-jpa.version>1.7.2.RELEASE</spring-data-jpa.version>
         <mysql-connector.version>5.1.6</mysql-connector.version>
+        <javax.persistence.version>1.0.2</javax.persistence.version>
+        <lombok.version>1.16.2</lombok.version>
+        <shiro.version>1.2.3</shiro.version>
+        <gson.version>2.3.1</gson.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

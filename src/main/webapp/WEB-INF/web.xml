@@ -8,7 +8,7 @@
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>com.dai.demo.foo</param-value>
+            <param-value>com.dai.demo.webapi</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -17,6 +17,7 @@
         <url-pattern>/webapi/*</url-pattern>
     </servlet-mapping>
 
+    <!-- filters configuration -->
     <filter>
         <filter-name>LogFilter</filter-name>
         <filter-class>
@@ -27,18 +28,19 @@
             <param-value>This parameter is for testing.</param-value>
         </init-param>
     </filter>
+    <filter-mapping>
+        <filter-name>LogFilter</filter-name>
+        <url-pattern>/webapi/*</url-pattern>
+    </filter-mapping>
+
     <filter>
-        <filter-name>AuthFilter</filter-name>
+        <filter-name>shiroFilter</filter-name>
         <filter-class>
-            com.dai.demo.filter.auth.AuthorizationFilter
+            org.springframework.web.filter.DelegatingFilterProxy
         </filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>LogFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>AuthFilter</filter-name>
-        <url-pattern>/webapi/auth/*</url-pattern>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>/webapi/*</url-pattern>
     </filter-mapping>
 </web-app>
